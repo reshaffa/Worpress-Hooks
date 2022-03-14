@@ -1,7 +1,9 @@
 <?php
+/*
+	REFERENCES : https://www.businessbloomer.com/
+*/
 
 /* CHECKOUT PAGE FEATURE WOOCOMMERCE */
-
 /* ADD THUMBNAIL IMAGE SIZE (50 x 50) TO CHECKOUT PAGE */
 add_filter('woocommerce_cart_item_name','product_image_review_order_checkout', 9999, 3); // 3 parameters on function
 function product_image_review_order_checkout($name, $cart_item, $cart_item_key){

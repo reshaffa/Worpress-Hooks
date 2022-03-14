@@ -42,12 +42,14 @@ add_action('woocommerce_review_order_after_order_total','show_total_discounts_ca
 function show_total_discounts_cart_checkout(){
 	$discount_total = 0;
 	// WC() ->cart->get_cart() is an fetch all data in cart.
-	foreach(WC()->cart->get_cart() as $key => $values){
+	foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {         
 		$product = $values['data'];
-		$regular_price = $product->get_regular_price(); // get regular price
-		$sale_price = $product->get_sale_price(); // get sale price
-		$discount = ($reguler_price-$sale_price) * $values['quantity'];
-		$discount_total += $discount;
+		if ( $product->is_on_sale() ) {
+		   $regular_price = $product->get_regular_price(); // call the function get_reguler_price to collect regular_price
+		   $sale_price = $product->get_sale_price(); // call the function get_sale_price to collect sale_price
+		   $discount = ( $regular_price - $sale_price ) * $values['quantity']; // calculate discount
+		   $discount_total += $discount;
+		}
 	}
 	
 	if ( $discount_total > 0 ) {

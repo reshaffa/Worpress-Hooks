@@ -57,4 +57,9 @@ function show_total_discounts_cart_checkout(){
 	}
 }
 
+add_filter("woocommerce_checkout_fields", "set_default_billing_city");
+function set_default_billing_city($fields){
+	var_dump($fields);
+}
+
 ?>

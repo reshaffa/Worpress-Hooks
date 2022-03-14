@@ -57,9 +57,16 @@ function show_total_discounts_cart_checkout(){
 	}
 }
 
-add_filter("woocommerce_checkout_fields", "set_default_billing_city");
-function set_default_billing_city($fields){
-	var_dump($fields);
+/* SHOW ERROR MESSAGES */
+add_filter( 'woocommerce_form_field', 'error_checkout_fields_in_label_error', 10, 4 );
+function error_checkout_fields_in_label_error( $field, $key, $args, $value ) {
+   if ( strpos( $field, '</label>' ) !== false && $args['required'] ) {
+      $error = '<span class="error" style="display:none">';
+      $error .= sprintf( __( '%s is a required field.', 'woocommerce' ), $args['label'] );
+      $error .= '</span>';
+      $field = substr_replace( $field, $error, strpos( $field, '</label>' ), 0);
+   }
+   return $field;
 }
 
 ?>

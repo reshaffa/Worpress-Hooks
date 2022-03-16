@@ -69,4 +69,17 @@ function error_checkout_fields_in_label_error( $field, $key, $args, $value ) {
    return $field;
 }
 
+add_filter( 'woocommerce_package_rates', 'woocommerce_package_rates' );
+function woocommerce_package_rates( $rates ) {
+    $user_id = get_current_user_id();
+    if ( ! wc_memberships_is_user_active_member( $user_id, 'silver' ) ) { return $rates; }
+    $discount_amount = 30; // 30%
+
+    foreach($rates as $key => $rate ) {
+        $rates[$key]->cost = $rates[$key]->cost - ( $rates[$key]->cost * ( $discount_amount/100 ) );
+    }
+
+    return $rates;
+}
+
 ?>

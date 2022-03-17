@@ -3,6 +3,13 @@
 	REFERENCES : https://www.businessbloomer.com/
 */
 
+/* Added Exsternal Assets */
+add_action( 'wp_enqueue_scripts', 'add_font_awesome_css', 1001 );
+function add_font_awesome_css(){
+	wp_register_style( 'Font_Awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css' );
+	wp_enqueue_style('Font_Awesome');
+}
+
 /* CHECKOUT PAGE FEATURE WOOCOMMERCE */
 /* ADD THUMBNAIL IMAGE SIZE (50 x 50) TO CHECKOUT PAGE */
 add_filter('woocommerce_cart_item_name','product_image_review_order_checkout', 9999, 3); // 3 parameters on function

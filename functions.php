@@ -90,61 +90,61 @@ function woocommerce_package_rates( $rates ) {
 }
 
 
-/* CALCULATE FEE ANSI >> SAFRIL ----- SCENARIO 1 (GROUP BY CATEGORIES) */
-add_action('woocommerce_cart_calculate_fees', function($cart) {
-	$start_date = '2022-03-18';
-	$end_date = '2022-03-31';
-	$categories = array(490);
-	$user_role = 'b2bking_role_31388';
-	$max_order = 2;
-	$shipping_costs = WC()->cart->get_shipping_total();
+// /* CALCULATE FEE ANSI >> SAFRIL ----- SCENARIO 1 (GROUP BY CATEGORIES) */
+// add_action('woocommerce_cart_calculate_fees', function($cart) {
+// 	$start_date = '2022-03-18';
+// 	$end_date = '2022-03-31';
+// 	$categories = array(490);
+// 	$user_role = 'b2bking_role_31388';
+// 	$max_order = 2;
+// 	$shipping_costs = WC()->cart->get_shipping_total();
 	
-	if(date("Y-m-d") <= $end_date) {
-		$ct_qty = 0;
-		foreach ( wc()->cart->get_cart() as $cart_item_key => $cart_item ) {
-			// check existing categories
-			if(count(array_intersect($cart_item['data']->get_category_ids(), $categories)) === 1){
-				$ct_qty = $ct_qty + $cart_item["quantity"];
-			}
-		}
-		$user_info = get_userdata(get_current_user_id());
-		if(in_array($user_role, $user_info->roles, true)) {
-			$isAlreadyOrder = gIsOrderExists($user_info->id, $start_date, $end_date);
-			if(!$asAlreadyOrder && ($ct_qty <= $max_order)){
+// 	if(date("Y-m-d") <= $end_date) {
+// 		$ct_qty = 0;
+// 		foreach ( wc()->cart->get_cart() as $cart_item_key => $cart_item ) {
+// 			// check existing categories
+// 			if(count(array_intersect($cart_item['data']->get_category_ids(), $categories)) === 1){
+// 				$ct_qty = $ct_qty + $cart_item["quantity"];
+// 			}
+// 		}
+// 		$user_info = get_userdata(get_current_user_id());
+// 		if(in_array($user_role, $user_info->roles, true)) {
+// 			$isAlreadyOrder = gIsOrderExists($user_info->id, $start_date, $end_date);
+// 			if(!$asAlreadyOrder && ($ct_qty <= $max_order)){
 
-				$cart->add_fee('Shipping Discount', -10000);
-			}
-		}
-	}
-});
+// 				$cart->add_fee('Shipping Discount', -10000);
+// 			}
+// 		}
+// 	}
+// });
 
-/* CALCULATE FEE ANSI >> SAFRIL ----- SCENARIO 2 (ONLY THIS PRODUCT CATEGORY) */
-add_action('woocommerce_cart_calculate_fees', function($cart) {
-	$start_date = '2022-03-18';
-	$end_date = '2022-03-31';
-	$categories = array(490);
-	$user_role = 'b2bking_role_31388';
-	$max_order = 2;
-	$shipping_costs = WC()->cart->get_shipping_total();
+// /* CALCULATE FEE ANSI >> SAFRIL ----- SCENARIO 2 (REMOVE PRODUCTS IN CART ID NOT IN PARTNERSHIP PROGRAM PRODUCT ID) */
+// add_action('woocommerce_cart_calculate_fees', function($cart) {
+// 	$start_date = '2022-03-18';
+// 	$end_date = '2022-03-31';
+// 	$categories = array(490);
+// 	$user_role = 'b2bking_role_31388';
+// 	$max_order = 2;
+// 	$shipping_costs = WC()->cart->get_shipping_total();
 	
-	if(date("Y-m-d") <= $end_date) {
-		$ct_qty = 0;
-		foreach ( wc()->cart->get_cart() as $cart_item_key => $cart_item ) {
-			// check existing categories
-			if(count(array_intersect($cart_item['data']->get_category_ids(), $categories)) === 1){
-				$ct_qty = $ct_qty + $cart_item["quantity"];
-			}else{
-				if (isset($cart_item['product_id'])) {
-						wc()->cart->remove_cart_item($cart_item_key);
-				}
-			}
-		}
-		$user_info = get_userdata(get_current_user_id());
-		if(in_array($user_role, $user_info->roles, true)) {
-			$isAlreadyOrder = gIsOrderExists($user_info->id, $start_date, $end_date);
-			if(!$asAlreadyOrder && ($ct_qty <= $max_order)){
-				$cart->add_fee('Shipping Discount', -10000);
-			}
-		}
-	}
-});
+// 	if(date("Y-m-d") <= $end_date) {
+// 		$ct_qty = 0;
+// 		foreach ( wc()->cart->get_cart() as $cart_item_key => $cart_item ) {
+// 			// check existing categories
+// 			if(count(array_intersect($cart_item['data']->get_category_ids(), $categories)) === 1){
+// 				$ct_qty = $ct_qty + $cart_item["quantity"];
+// 			}else{
+// 				if (isset($cart_item['product_id'])) {
+// 						wc()->cart->remove_cart_item($cart_item_key);
+// 				}
+// 			}
+// 		}
+// 		$user_info = get_userdata(get_current_user_id());
+// 		if(in_array($user_role, $user_info->roles, true)) {
+// 			$isAlreadyOrder = gIsOrderExists($user_info->id, $start_date, $end_date);
+// 			if(!$asAlreadyOrder && ($ct_qty <= $max_order)){
+// 				$cart->add_fee('Shipping Discount', -10000);
+// 			}
+// 		}
+// 	}
+// });
